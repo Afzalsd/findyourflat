@@ -13,11 +13,41 @@ const House = ( { house } ) => {
           <div className='bg-green-500 rounded-full text-white px-3'>{type}</div>
           <div className='bg-violet-500 rounded-full text-white px-3'>{city}</div>
         </div>
+
         
         {/* Address */}
-        <div className='text-lg font-semibold text-gray-700 mb-4'>{address}</div>
+        <div className='text-lg font-semibold max-w-[260px]'>{address}</div> {/* text-gray-700 mb-4 */}
 
-        {/* Bedrooms, Bathrooms, and Surface Area */}
+        <div className='flex gap-x-4 my-4'>
+          <div className='flex items-center text-grey-600 gap-1'>
+            <div className='text-[20px]'>
+              <BiBed />
+            </div>
+            <div>{bedrooms}</div>
+          </div>
+          <div className='flex items-center text-grey-600 gap-1'>
+            <div className='text-[20px]'>
+              <BiBath />
+            </div>
+            <div>{bathrooms}</div>
+          </div>
+          <div className='flex items-center text-grey-600 gap-1'>
+            <div className='text-[20px]'>
+              <BiArea />
+            </div>
+            <div>{surface}</div>
+          </div>
+        </div>
+
+        {/* Price */}
+        <div className='mb-4 text-lg font-semibold text-violet-600'>{price}</div>
+      </div>
+    </>
+  );
+};
+
+export default House;
+{/* Bedrooms, Bathrooms, and Surface Area
         <div className='flex items-center gap-x-4 my-4'>
           <div className='flex items-center text-gray-600'>
             <BiBed className='mr-2' />
@@ -31,13 +61,4 @@ const House = ( { house } ) => {
             <BiArea className='mr-2' />
             <span>{surface} sqft</span>
           </div>
-        </div>
-
-        {/* Price */}
-        <div className='mb-4 text-lg font-semibold text-violet-600'>{price}</div>
-      </div>
-    </>
-  );
-};
-
-export default House;
+        </div> */}
