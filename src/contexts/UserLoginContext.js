@@ -1,3 +1,4 @@
 import {createContext} from 'react';
 
-export const userLoginContext=createContext();
+const userLoginContext = createContext();
+export default userLoginContext;
