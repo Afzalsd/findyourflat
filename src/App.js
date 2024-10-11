@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import PropertyDetails from './pages/PropertyDetails';
-
+import Userprofile from './pages/user-profile/Userprofile';
 
 const App = () => {
   return( 
@@ -17,6 +17,7 @@ const App = () => {
       <Route path='/property/:id' element={<PropertyDetails />} />
       <Route path='/login' element={<Login />}/>
       <Route path='/register' element={<Register />}/>
+      <Route path='/user-profile' element={<Userprofile />}></Route>
     </Routes>
     <Footer />
   </div>

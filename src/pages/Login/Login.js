@@ -15,7 +15,7 @@ function Login() {
     if (usersArray.length === 0) {
       setUserCredErr('Username/password are incorrect');
     } else {
-      navigate('/');
+      navigate('/user-profile');
     }
   } 
 
