@@ -11,9 +11,6 @@ import { Link } from 'react-router-dom';
 
 
 
-
-
-
 const PropertyDetails = () => {
   //get the house id
   const { id } = useParams();
@@ -25,7 +22,8 @@ const PropertyDetails = () => {
   });
   console.log(house);
 
-  return ( <section>
+  return ( 
+  <section>
     <div className='container mx-auto min-h-[800px] mb-14'>
       <div className='flex flex-col lg:flex-row lg:items-center lg:justify-between'>
         <div>

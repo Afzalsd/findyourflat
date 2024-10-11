@@ -7,6 +7,7 @@ import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import PropertyDetails from './pages/PropertyDetails';
 
+
 const App = () => {
   return( 
   <div className='max-w-[1440px] mx-auto bg-[#f5f5f5]'>
