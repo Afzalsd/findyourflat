@@ -1,37 +1,41 @@
 import React, { useState } from 'react';
 import './Register.css';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom'; 
 
 const Register = () => {
-  const { handleSubmit, register, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [error, setErr] = useState("");
+  const navigate = useNavigate();
 
-  const handleSignup = async (data) => {
-    console.log(data);
+  async function onUserRegister(newUser) {
     try {
-      const response = await fetch('http://localhost:3000/users', {
+      let res = await fetch('http://localhost:3000/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(newUser),
       });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+
+      // Check for successful response
+      if (res.status === 201) { // Changed from res.state to res.status
+        navigate('/login');
+      } else {
+        // Handle non-successful response
+        const errorData = await res.json();
+        setErr(errorData.message || "Registration failed.");
       }
-      const result = await response.json();
-      console.log('Success:', result);
-      alert('Registered successfully!'); // Set the success message
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Registration failed. Please try again.'); // Optional: handle error message
+    } catch (err) {
+      setErr(err.message);
     }
-  };
+  }
 
   return (
     <div className="signup-container">
       <div className="signup-card">
         <h2>Sign Up</h2>
-        <form onSubmit={handleSubmit(handleSignup)}>
+        <form onSubmit={handleSubmit(onUserRegister)}>
           <div className="form-group">
             <label htmlFor='name'>Name</label>
             <input
@@ -39,6 +43,7 @@ const Register = () => {
               {...register('name', { required: true })}
               placeholder="Enter your name"
             />
+            {errors.name?.type === 'required' && <span className='error'>This field is required</span>}
           </div>
           <div className="form-group">
             <label htmlFor='email'>Email</label>
@@ -47,6 +52,7 @@ const Register = () => {
               {...register('email', { required: true })}
               placeholder="Enter your email"
             />
+            {errors.email?.type === 'required' && <span className='error'>This field is required</span>}
           </div>
           <div className="form-group">
             <label htmlFor='password'>Password</label>
@@ -55,6 +61,7 @@ const Register = () => {
               {...register('password', { required: true })}
               placeholder="Enter your password"
             />
+            {errors.password?.type === 'required' && <span className='error'>This field is required</span>}
           </div>
           <div className="form-group">
             <label htmlFor='confirmPassword'>Confirm Password</label>
@@ -63,7 +70,9 @@ const Register = () => {
               {...register('confirmPassword', { required: true })}
               placeholder="Confirm your password"
             />
+            {errors.confirmPassword?.type === 'required' && <span className='error'>This field is required</span>}
           </div>
+          {error && <span className='error'>{error}</span>}
           <button type="submit" className="btn">Sign Up</button>
         </form>
       </div>
