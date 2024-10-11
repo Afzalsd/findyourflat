@@ -4,7 +4,7 @@ import { housesData} from '../data';
 import { useParams } from 'react-router-dom';
 import { BiBed, BiBath, BiArea} from 'react-icons/bi';
 import { Link } from 'react-router-dom';
-
+import {useForm} from 'react-hook-form'
 
 
 
@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 const PropertyDetails = () => {
   //get the house id
   const { id } = useParams();
-  
+  let { register, handleSubmit, formState: { errors } } = useForm();
   // get the house based on id
   const house = housesData.find(house => {
     return house.id === parseInt(id);
@@ -68,11 +68,14 @@ const PropertyDetails = () => {
             </div>
           </div>
           {/* form */}
-          <form className='flex flex-col gap-y-4'>
-            <input className='border border-gray-300 focus:border-violet-700 outline-none rounded w-full px-4 h-14 text-sm' type='text' placeholder='Name*' ></input>
-            <input className='border border-gray-300 focus:border-violet-700 outline-none rounded w-full px-4 h-14 text-sm' type='text' placeholder='Email*'></input>
-            <input className='border border-gray-300 focus:border-violet-700 outline-none rounded w-full px-4 h-14 text-sm' type='text' placeholder='Phone*'></input>
-            <textarea className='border border-gray-300 focus:border-violet-700 outline-none resize-none rounded w-full p-4 h-36 text-sm text-gray-400' placeholder='Message*' defaultValue='Hello, I am intrested in [Modern apartment]'></textarea>
+          <form className='flex flex-col gap-y-4' onSubmit={handleSubmit((data) => console.log(data))}>
+            {errors.name && <p className='text-red-500'>*Name is required</p>}
+            <input className='border border-gray-300 focus:border-violet-700 outline-none rounded w-full px-4 h-14 text-sm' type='text' {...register("name", { required: true })} placeholder='Name*' ></input>
+            {errors.email && <p className='text-red-500'>*Email is required</p>}
+            <input className='border border-gray-300 focus:border-violet-700 outline-none rounded w-full px-4 h-14 text-sm' type='email' {...register("email", { required: true })} placeholder='Email*'></input>
+            {errors.phone && <p className='text-red-500'>*Phone is required</p>}
+            <input className='border border-gray-300 focus:border-violet-700 outline-none rounded w-full px-4 h-14 text-sm' type='number' {...register("phone", { required: true })} placeholder='Phone*'></input>
+            <textarea className='border border-gray-300 focus:border-violet-700 outline-none resize-none rounded w-full p-4 h-36 text-sm text-gray-400' {...register("message")} placeholder='Message*'></textarea>
             <div className='flex gap-x-2'>
               <button className='bg-violet-700 hover:bg-violet-800 text-white rounded p-4 text-sm w-full transition'>Send Message</button>
               <button className='border border-violet-700 text-violet-700 hover:border-violet-500 hover:text-violet-500 rounded p-4 text-sm w-full transition'>Call</button>
