@@ -1,49 +1,29 @@
-import { UserLoginContext } from "./UserLoginContext";
-import { useState } from "react";
+import React, { useState } from 'react';
+import { UserLoginContext } from './UserLoginContext';
 
-function UserLoginStore({ children }) {
-  //login user state
-  let [currentUser, setCurrentUser] = useState(null);
-  let [userLoginStatus, setUserLoginStatus] = useState(false);
-  let [err, setErr] = useState("");
+function UserLoginStore({children}) {
+  let [user, setUser] = useState({});
+  let [status, setStatus] = useState(false);
+  let [token, setToken] = useState('');
+  let [err, setErr] = useState('');
 
-  //user login
-  async function loginUser(userCred) {
-    try {
-      let res = await fetch(
-        `http://localhost:3000/users?username=${userCred.username}&password=${userCred.password}`
-      );
-      let usersList = await res.json();
-      console.log("users list", usersList);
-      if (usersList.length === 0) {
-        //invalid credentials
-        console.log("invalid user");
-        setCurrentUser(null);
-        setUserLoginStatus(false);
-        setErr('Invalid Username or Password')
-       
-      } else {
-        setCurrentUser(usersList[0]);
-        setUserLoginStatus(true);
-        setErr('')
-      }
-    } catch (error) {
-      setErr(error.message);
-    }
+  let loginUser = (obj) => {
+    console.log(obj);
+    setUser(obj);
+    setStatus(true);
+    setToken(obj.token);
+    setErr('');
   }
 
-  //user logout
-  function logoutUser() {
-    //reset state
-    setCurrentUser({});
-    setUserLoginStatus(false);
-    setErr('')
+  let logoutUser = () => {
+    setUser({});
+    setStatus(false);
+    setToken('');
+    setErr('');
   }
 
   return (
-    <UserLoginContext.Provider
-      value={{ loginUser, logoutUser, userLoginStatus,err,currentUser,setCurrentUser }}
-    >
+    <UserLoginContext.Provider value={{ user, loginUser, token, status, err, logoutUser }}>
       {children}
     </UserLoginContext.Provider>
   );
