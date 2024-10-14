@@ -8,7 +8,6 @@ function UserLoginStore({children}) {
   let [err, setErr] = useState('');
 
   let loginUser = (obj) => {
-    console.log(obj);
     setUser(obj);
     setStatus(true);
     setToken(obj.token);
@@ -23,7 +22,7 @@ function UserLoginStore({children}) {
   }
 
   return (
-    <UserLoginContext.Provider value={{ user, loginUser, token, status, err, logoutUser }}>
+    <UserLoginContext.Provider value={{ user, setUser, loginUser, token, status, err, logoutUser }}>
       {children}
     </UserLoginContext.Provider>
   );

@@ -1,51 +1,10 @@
 {
   "users": [
     {
-      "id": "e36e",
-      "name": "UB",
-      "email": "sjeshni2000@gmail.com",
-      "password": "000",
-      "confirmPassword": "000"
-    },
-    {
-      "id": "c1e8",
-      "name": "hello",
-      "email": "hello@mail.com",
-      "password": "abcd",
-      "confirmPassword": "abcd"
-    },
-    {
-      "id": "868c",
-      "name": "bambu",
-      "email": "bambu@gmail.com",
-      "password": "bambu",
-      "confirmPassword": "bambu"
-    },
-    {
-      "id": "26d0",
-      "name": "Pathivada Harsha Vardhan",
-      "email": "harshabambu@gmail.com",
-      "password": "asdf",
-      "confirmPassword": "asdf"
-    },
-    {
-      "id": "7c15",
-      "name": "Pathivada Harsha Vardhan",
-      "email": "harshabambu@gmail.com",
-      "password": "0000",
-      "confirmPassword": "0000"
-    },
-    {
-      "id": "edb9",
-      "name": "Pathivada Harsha Vardhan",
-      "email": "h@gmail.com",
-      "password": "00",
-      "confirmPassword": "00"
-    },
-    {
-      "id": "e40a",
-      "name": "Red",
+      "id": "58b6",
+      "name": "red",
       "email": "red@gmail.com",
+      "contact": "123123",
       "password": "red",
       "confirmPassword": "red"
     }

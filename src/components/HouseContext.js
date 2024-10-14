@@ -17,7 +17,6 @@ const HouseContextProvider = ({children}) => {
     const allCities = houses.map((house) => {
       return house.city;
     });
-    console.log(allCities);
 
     //remove duplicate cities
     const uniqueCities = ['Location (Any)', ...new Set(allCities)];

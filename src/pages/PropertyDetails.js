@@ -7,10 +7,6 @@ import { Link } from 'react-router-dom';
 import {useForm} from 'react-hook-form'
 
 
-
-
-
-
 const PropertyDetails = () => {
   //get the house id
   const { id } = useParams();
