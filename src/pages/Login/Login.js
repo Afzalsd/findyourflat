@@ -27,7 +27,7 @@ function Login() {
         } else {
           // If credentials are correct, log the user in
           loginUser(user);
-          navigate('/user-profile');
+          navigate('/');
         }
       }
     } catch (error) {

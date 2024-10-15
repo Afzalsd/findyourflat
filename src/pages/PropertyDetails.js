@@ -50,6 +50,7 @@ const PropertyDetails = () => {
               <BiArea className='text-2xl' />
               <div>{house.surface}</div>
             </div>
+            <button className='bg-violet-700 hover:bg-violet-800 text-white rounded p-4 text-sm w-60 transition'>Add to Cart</button>
           </div>
           <div>{house.description}</div>
         </div>
@@ -74,7 +75,6 @@ const PropertyDetails = () => {
             <textarea className='border border-gray-300 focus:border-violet-700 outline-none resize-none rounded w-full p-4 h-36 text-sm text-gray-400' {...register("message")} placeholder='Message*'></textarea>
             <div className='flex gap-x-2'>
               <button className='bg-violet-700 hover:bg-violet-800 text-white rounded p-4 text-sm w-full transition'>Send Message</button>
-              <button className='border border-violet-700 text-violet-700 hover:border-violet-500 hover:text-violet-500 rounded p-4 text-sm w-full transition'>Call</button>
             </div>
           </form>
         </div>
