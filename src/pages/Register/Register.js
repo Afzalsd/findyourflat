@@ -34,6 +34,7 @@ const Register = () => {
   return (
     <div className="signup-container">
       <div className="signup-card">
+      {error && <span className='error'>{error}</span>}
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit(onUserRegister)}>
           <div className="form-group">
@@ -81,7 +82,6 @@ const Register = () => {
             />
             {errors.confirmPassword?.type === 'required' && <span className='error'>*This field is required</span>}
           </div>
-          {error && <span className='error'>{error}</span>}
           <button type="submit" className="btn">Sign Up</button>
         </form>
       </div>
