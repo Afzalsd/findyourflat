@@ -4,6 +4,7 @@ export const HouseContext = createContext();
 
 const HouseContextProvider = ({ children }) => {
   const [houses, setHouses] = useState([]);
+  const [filteredHouses, setFilteredHouses] = useState([]); // Keep filtered houses separate
   const [city, setCity] = useState('Location (Any)');
   const [cities, setCities] = useState([]);
   const [property, setProperty] = useState('Property type (Any)');
@@ -18,8 +19,10 @@ const HouseContextProvider = ({ children }) => {
       try {
         const response = await fetch('http://localhost:5000/agent/agents'); // Adjust the URL to your backend route
         const data = await response.json();
-        console.log(data.payload[0].houses)
-        setHouses(data.payload[0].houses);
+        if (data && data.payload) {
+          setHouses(data.payload);
+          setFilteredHouses(data.payload); // Initialize filtered houses
+        }
         setLoading(false);
       } catch (error) {
         console.error('Error fetching houses:', error);
@@ -30,14 +33,14 @@ const HouseContextProvider = ({ children }) => {
     fetchHouses();
   }, []);
 
-  // Return the cities
+  // Return the unique cities from the house data
   useEffect(() => {
     const allCities = houses.map((house) => house.city);
     const uniqueCities = ['Location (Any)', ...new Set(allCities)];
     setCities(uniqueCities);
   }, [houses]);
 
-  // Return the properties
+  // Return the unique property types from the house data
   useEffect(() => {
     const allProperties = houses.map((house) => house.type);
     const uniqueProperties = ['Property type (Any)', ...new Set(allProperties)];
@@ -46,30 +49,47 @@ const HouseContextProvider = ({ children }) => {
 
   const handleClick = () => {
     setLoading(true);
-    const isDefault = (str) => str.split(' ').includes('(Any)');
-    const minPrice = parseInt(price.split(' ')[0]);
-    const maxPrice = parseInt(price.split(' ')[2]);
+    
+    // Parse price
+    const isDefault = (str) => str.includes('(Any)');
+    let minPrice = 0, maxPrice = Infinity;
 
-    const newHouses = houses.filter((house) => {
-      const housePrice = parseInt(house.price);
-      if (house.city === city && house.type === property && housePrice >= minPrice && housePrice <= maxPrice) return house;
-      if (isDefault(city) && isDefault(property) && isDefault(price)) return house;
-      if (!isDefault(city) && isDefault(property) && isDefault(price)) return house.city === city;
-      if (isDefault(city) && !isDefault(property) && isDefault(price)) return house.type === property;
-      if (isDefault(city) && isDefault(property) && !isDefault(price) && housePrice >= minPrice && housePrice <= maxPrice) return house;
-      if (!isDefault(city) && !isDefault(property) && isDefault(price)) return house.city === city && house.type === property;
-      if (!isDefault(city) && isDefault(property) && !isDefault(price) && housePrice >= minPrice && housePrice <= maxPrice) return house.city === city;
-      if (isDefault(city) && !isDefault(property) && !isDefault(price) && housePrice >= minPrice && housePrice <= maxPrice) return house.type === property;
+    if (!isDefault(price)) {
+      const priceRange = price.split(' ');
+      minPrice = parseInt(priceRange[0], 10);
+      maxPrice = parseInt(priceRange[2], 10);
+    }
+
+    // Filter houses based on selected filters
+    const newFilteredHouses = houses.filter((house) => {
+      const housePrice = parseInt(house.price, 10) || 0; // Ensure house price is a valid number
+      const matchesCity = isDefault(city) || house.city === city;
+      const matchesProperty = isDefault(property) || house.type === property;
+      const matchesPrice = housePrice >= minPrice && housePrice <= maxPrice;
+
+      return matchesCity && matchesProperty && matchesPrice;
     });
 
     setTimeout(() => {
-      setHouses(newHouses.length < 1 ? [] : newHouses);
+      setFilteredHouses(newFilteredHouses.length < 1 ? [] : newFilteredHouses);
       setLoading(false);
     }, 1000);
   };
 
   return (
-    <HouseContext.Provider value={{ houses, city, setCity, cities, property, setProperty, properties, price, setPrice, loading, handleClick }}>
+    <HouseContext.Provider value={{ 
+      houses: filteredHouses, // Pass filtered houses to context consumers
+      city, 
+      setCity, 
+      cities, 
+      property, 
+      setProperty, 
+      properties, 
+      price, 
+      setPrice, 
+      loading, 
+      handleClick 
+    }}>
       {children}
     </HouseContext.Provider>
   );

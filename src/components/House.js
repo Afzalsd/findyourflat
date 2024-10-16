@@ -40,7 +40,7 @@ const House = ( { house } ) => {
         </div>
 
         {/* Price */}
-        <div className='mb-4 text-lg font-semibold text-violet-600'>{price}</div>
+        <div className='mb-4 text-lg font-semibold text-violet-600'>${price}</div>
       </div>
     </>
   );
