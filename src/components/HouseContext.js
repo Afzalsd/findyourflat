@@ -1,10 +1,11 @@
 import React, { useState, useEffect, createContext } from 'react';
-
+import {housesData} from '../data';
 export const HouseContext = createContext();
 
 const HouseContextProvider = ({ children }) => {
-  const [houses, setHouses] = useState([]);
-  const [filteredHouses, setFilteredHouses] = useState([]); // Keep filtered houses separate
+  const [houses, setHouses] = useState(housesData);
+  const [filteredHouses, setFilteredHouses] = useState(housesData); // Keep filtered houses separate
+  console.log('Houses:', houses);
   const [city, setCity] = useState('Location (Any)');
   const [cities, setCities] = useState([]);
   const [property, setProperty] = useState('Property type (Any)');
@@ -13,25 +14,25 @@ const HouseContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   // Fetch houses data from backend API
-  useEffect(() => {
-    const fetchHouses = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch('http://localhost:5000/agent/agents'); // Adjust the URL to your backend route
-        const data = await response.json();
-        if (data && data.payload) {
-          setHouses(data.payload);
-          setFilteredHouses(data.payload); // Initialize filtered houses
-        }
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching houses:', error);
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchHouses = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const response = await fetch('http://localhost:5000/agent/agents'); // Adjust the URL to your backend route
+  //       const data = await response.json();
+  //       if (data && data.payload) {
+  //         setHouses(data.payload);
+  //         setFilteredHouses(data.payload); // Initialize filtered houses
+  //       }
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error('Error fetching houses:', error);
+  //       setLoading(false);
+  //     }
+  //   };
     
-    fetchHouses();
-  }, []);
+  //   fetchHouses();
+  // }, []);
 
   // Return the unique cities from the house data
   useEffect(() => {
